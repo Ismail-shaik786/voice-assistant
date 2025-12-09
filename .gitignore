@@ -1,0 +1,8 @@
+/envjar
+contacts.csv
+jarvis.db
+/engine/__pycache__
+/engine/cookies.json
+/engine/rough.py
+gosht.db
+/engine/auth/trainer/trainer.yml
