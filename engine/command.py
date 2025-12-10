@@ -2,6 +2,8 @@ import pyttsx3
 import speech_recognition as sr
 import eel
 import time
+
+
 def speak(text):
     text = str(text)
     engine = pyttsx3.init('sapi5')
@@ -11,6 +13,7 @@ def speak(text):
     
     eel.DisplayMessage(text)
     engine.say(text)
+    
     eel.receiverText(text)
     engine.runAndWait()
 
@@ -72,11 +75,12 @@ def allCommands(message=1):
                         speak("what message to send")
                         query = takecommand()
                                         
-                    elif "phone call" in query or "voice call" in query or "call" in query:
+                    elif "phone call" in query or "voice call" in query :
                         message = 'call'
+                    elif "video call" in query or  "videocall" in query:
+                        message = 'videocall'
                     else:
-                        message = 'video call'
-                                        
+                        return                
                     whatsApp(contact_no, query, message, name)
 
 

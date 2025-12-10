@@ -61,7 +61,7 @@
             <div class="col-md-12">
                 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
                    <div class="text-center">
-                     <p class="text-start text-light mb-4 siri-message text-center" ><span>hello iam  <span></p>
+                     <p class="text-start text-light mb-4 siri-message text-center" ><span>hello iam jarvis <span></p>
                    
                      <div id="siri-container"></div> 
                     </div>
@@ -72,6 +72,56 @@
     </div>
 
    </section>
+   <!--setting button section-->
+   <!-- SETTINGS PANEL -->
+<div id="settings-panel" class="settings-panel" hidden>
+    <div class="settings-content">
+
+        <div class="settings-header">
+            <h4>Settings</h4>
+            <button id="close-settings" class="close-btn">&times;</button>
+        </div>
+
+        <div class="settings-tabs">
+            <button class="tab-btn active" data-tab="tab1">Contact Details</button>
+            <button class="tab-btn" data-tab="tab2">Webpage</button>
+            <button class="tab-btn" data-tab="tab3">System Apps</button>
+        </div>
+
+        <!-- TAB 1 -->
+        <div class="tab-content active" id="tab1">
+            <label>Name:</label>
+            <input type="text" class="input-style" id="contact-name">
+            <label>Contact No:</label>
+            <input type="text" class="input-style" id="contact-number">
+            <button class="add-btn">Add</button><br><br>
+            <button class="add-btn2">delete</button>
+        </div>
+
+        <!-- TAB 2 -->
+        <div class="tab-content" id="tab2">
+            <label>Webpage Name:</label>
+            <input type="text" class="input-style" id="web-name">
+            <label>Webpage Path:</label>
+            <input type="text" class="input-style" id="web-path">
+            <button class="add-btn">Add</button><br><br>
+            <button class="add-btn2">delete</button>
+        </div>
+
+        <!-- TAB 3 -->
+        <div class="tab-content" id="tab3">
+            <label>App Name:</label>
+            <input type="text" class="input-style" id="app-name">
+            <label>App Location:</label>
+            <input type="text" class="input-style" id="app-path">
+            <button class="add-btn">Add</button><br><br>
+            <button class="add-btn2">delete</button>
+        </div>
+
+    </div>
+</div>
+
+
    <!--chathistory-->
     <div class="offcanvas offcanvas-start chat-canvas" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
         id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">

@@ -34,7 +34,7 @@ while True:
     k = cv2.waitKey(100) & 0xff # Waits for a pressed key
     if k == 27: # Press 'ESC' to stop
         break
-    elif count >= 1000: # Take 50 sample (More sample --> More accuracy)
+    elif count >= 1000  : # Take 50 sample (More sample --> More accuracy)
          break
 
 print("Samples taken now closing the program....")

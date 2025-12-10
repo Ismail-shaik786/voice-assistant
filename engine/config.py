@@ -1,3 +1,4 @@
+import eel
 ASSISTANCE_NAME="root"
 system_apps={
     "whatsapp":'C:\\Users\\ISMAIL\\OneDrive\\Desktop\\Whatsapp.lnk',
@@ -49,5 +50,25 @@ contacts = {
     "Ashok 10 Th": "+916304117930",
     "Aunty(giri )": "+918897438990",
     "Gundu": "+919912937243",
-    'manohar':'+917981972986'
+    'manohar':'+917981972986',
+    'phani':"+918688085352",
+    "potti":'+918688125417'
 }
+
+
+#
+
+@eel.expose
+def save_contact(name, number):
+    contacts[name] = number
+    return f"Contact saved: {name} - {number}"
+
+@eel.expose
+def save_webpage(webName, webPath):
+    web_apps[webName] = webPath
+    return f"Webpage saved: {webName}"
+
+@eel.expose
+def save_app(appName, appPath):
+    system_apps[appName] = appPath
+    return f"App saved: {appName}"

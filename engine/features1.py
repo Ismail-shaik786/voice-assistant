@@ -3,10 +3,10 @@ import subprocess
 from  playsound import playsound
 import eel
 import os
-import sqlite3
+
 import pyautogui
-from engine.config import ASSISTANCE_NAME, system_apps, web_apps, contacts
-#from engine import config
+#from engine.config import ASSISTANCE_NAME, system_apps, web_apps, contacts
+from engine import config
 from engine.command import *
 import pywhatkit as kit
 import re
@@ -25,8 +25,6 @@ genai.configure(api_key="AIzaSyCGM6v6eqLAL4GFwgsT3WnSad3dxTval54")
 
 
 model = genai.GenerativeModel("models/gemini-2.5-flash")
-con = sqlite3.connect("config.db")
-cursor = con.cursor()
 
 #playing assistance sound function
 @eel.expose
@@ -37,38 +35,22 @@ def playAssistancesound():
 
 
 def openCommand(query):
-    query = query.replace(ASSISTANCE_NAME, "")
+    query = query.replace(config.ASSISTANCE_NAME, "")
     query = query.replace("open", "")
     query.lower()
-
     app_name = query.strip()
 
     if app_name != "":
 
         try:
-            cursor.execute(
-                'SELECT app_path FROM system_apps WHERE app_name IN (?)', (app_name,))
-            results = cursor.fetchall()
-
-            if len(results) != 0:
-                speak("Opening "+query)
-                os.startfile(results[0][0])
-
-            elif len(results) == 0: 
-                cursor.execute(
-                'SELECT web_path FROM webpages WHERE web_name IN (?)', (app_name,))
-                results = cursor.fetchall()
-                
-                if len(results) != 0:
-                    speak("Opening "+query)
-                    webbrowser.open(results[0][0])
-
-                else:
-                    speak("Opening "+query)
-                    try:
-                        os.system('start '+query)
-                    except:
-                        speak("not found")
+           if app_name in config.system_apps:
+              speak('opening'+app_name)
+              os.startfile(config.system_apps[app_name])
+           elif app_name in config.web_apps:
+              speak('opening'+app_name)
+              webbrowser.open(config.web_apps[app_name])
+           else:
+              speak("no app is there to open")
         except:
             speak("some thing went wrong")
 
@@ -123,26 +105,23 @@ def hotword():
 
 
 # find contacts
-# find contacts
 def findContact(query):
-    
-    words_to_remove = [ASSISTANCE_NAME, 'make', 'a', 'to', 'phone', 'call', 'send', 'message', 'wahtsapp', 'video']
-    query = remove_words(query, words_to_remove)
+    # Clean words
+    words_to_remove = [config.ASSISTANCE_NAME, 'make', 'a', 'to', 'phone', 'call', 'send', 'message', 'whatsapp', 'video']
+    query = remove_words(query, words_to_remove).strip().lower()
 
-    try:
-        query = query.strip().lower()
-        cursor.execute("SELECT number FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
-        results = cursor.fetchall()
-        print(results[0][0])
-        mobile_number_str = str(results[0][0])
+    # Search in contacts dictionary
+    for name, number in config.contacts.items():
+        if query in name.lower():  # partial + case-insensitive match
+            mobile_number_str = str(number)
+            if not mobile_number_str.startswith('+91'):
+                mobile_number_str = '+91' + mobile_number_str
 
-        if not mobile_number_str.startswith('+91'):
-            mobile_number_str = '+91' + mobile_number_str
+            return mobile_number_str, name
 
-        return mobile_number_str, query
-    except:
-        speak('not exist in contacts')
-        return 0, 0
+    # Not found
+    speak('not exist in contacts')
+    return 0, 0
 
 #whatsapp message
 def whatsApp(mobile_no, message, flag, name):

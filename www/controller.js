@@ -50,5 +50,14 @@ eel.expose(senderText)
         }
         
     }
+    
 
-});
+
+
+
+      
+
+
+}
+);
+

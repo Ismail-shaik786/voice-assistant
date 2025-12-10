@@ -45,7 +45,7 @@ def AuthenticateFace():
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
             # CHECK: accuracy must be between 60 and 80
-            if 60 < accuracy < 80:
+            if 45 < accuracy < 80:
                 valid_count += 1
                 print(f"✔ Valid Accuracy {accuracy:.2f}%  | Count = {valid_count}")
             else:

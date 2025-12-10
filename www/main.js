@@ -93,5 +93,131 @@ $('#chatbox').keypress(function (e) {
         playAssistant(message);
     }
 });
+//stopiing assitant
+// Stop setting button
+// OPEN SETTINGS PANEL
+$("#SettingBtn").click(function () {
+    $("#settings-panel").removeAttr("hidden");
+});
+
+// CLOSE SETTINGS PANEL
+$("#close-settings").click(function () {
+    $("#settings-panel").attr("hidden", true);
+});
+
+// TAB SWITCHING
+$(".tab-btn").click(function () {
+    let tab = $(this).data("tab");
+
+    $(".tab-btn").removeClass("active");
+    $(this).addClass("active");
+
+    $(".tab-content").removeClass("active");
+    $("#" + tab).addClass("active");
+});
+
+//setting panel control
+// TAB 1 — CONTACT DETAILS
+$("#tab1 .add-btn").click(function () {
+    let name = $("#contact-name").val().trim();
+    let number = $("#contact-number").val().trim();
+
+    if (name === "" || number === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    eel.insert_contact(name, number)(function (response) {
+        alert(response);
+        $("#contact-name").val("");
+        $("#contact-number").val("");
+    });
+});
+
+// TAB 2 — WEBPAGE DETAILS
+$("#tab2 .add-btn").click(function () {
+    let webName = $("#web-name").val().trim();
+    let webPath = $("#web-path").val().trim();
+
+    if (webName === "" || webPath === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    eel.insert_webpage(webName, webPath)(function (response) {
+        alert(response);
+        $("#web-name").val("");
+        $("#web-path").val("");
+    });
+});
+
+// TAB 3 — SYSTEM APPS
+$("#tab3 .add-btn").click(function () {
+    let appName = $("#app-name").val().trim();
+    let appPath = $("#app-path").val().trim();
+
+    if (appName === "" || appPath === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    eel.insert_app(appName, appPath)(function (response) {
+        alert(response);
+        $("#app-name").val("");
+        $("#app-path").val("");
+    });
+});
+//detele from setting panel
+$("#tab1 .add-btn2").click(function () {
+    let name = $("#contact-name").val().trim();
+    let number = $("#contact-number").val().trim();
+
+    if (name === "" || number === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    eel.delete_contact(name, number)(function (response) {
+        alert(response);
+        $("#contact-name").val("");
+        $("#contact-number").val("");
+    });
+});
+
+// TAB 2 — WEBPAGE DETAILS
+$("#tab2 .add-btn2").click(function () {
+    let webName = $("#web-name").val().trim();
+    let webPath = $("#web-path").val().trim();
+
+    if (webName === "" || webPath === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    eel.delete_webpage(webName, webPath)(function (response) {
+        alert(response);
+        $("#web-name").val("");
+        $("#web-path").val("");
+    });
+});
+
+// TAB 3 — SYSTEM APPS
+$("#tab3 .add-btn2").click(function () {
+    let appName = $("#app-name").val().trim();
+    let appPath = $("#app-path").val().trim();
+
+    if (appName === "" || appPath === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    eel.delete_app(appName, appPath)(function (response) {
+        alert(response);
+        $("#app-name").val("");
+        $("#app-path").val("");
+    });
+});
+
+
 
 });
