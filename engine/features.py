@@ -12,21 +12,14 @@ import pywhatkit as kit
 import re
 
 import webbrowser
-from engine.helper import extact_yt_term  , remove_words
+from engine.helper import extact_yt_term  , remove_words,get_api_key
 import pvporcupine
 import pyaudio
 import struct 
-
+import time
 
 import google.generativeai as genai
 
-
-genai.configure(api_key="AIzaSyCGM6v6eqLAL4GFwgsT3WnSad3dxTval54")
-
-
-model = genai.GenerativeModel("models/gemini-2.5-flash")
-con = sqlite3.connect("config.db")
-cursor = con.cursor()
 
 #playing assistance sound function
 @eel.expose
@@ -37,9 +30,11 @@ def playAssistancesound():
 
 
 def openCommand(query):
+    con = sqlite3.connect("config.db")
+    cursor = con.cursor()
     query = query.replace(ASSISTANCE_NAME, "")
     query = query.replace("open", "")
-    query.lower()
+    query=query.lower()
 
     app_name = query.strip()
 
@@ -69,8 +64,8 @@ def openCommand(query):
                         os.system('start '+query)
                     except:
                         speak("not found")
-        except:
-            speak("some thing went wrong")
+        except Exception as e:
+            speak("some thing went wrong:" )
 
        
 
@@ -96,6 +91,7 @@ def hotword():
         
         # loop for streaming
         while True:
+            
             keyword=audio_stream.read(porcupine.frame_length)
             keyword=struct.unpack_from("h"*porcupine.frame_length,keyword)
 
@@ -125,7 +121,8 @@ def hotword():
 # find contacts
 # find contacts
 def findContact(query):
-    
+    con = sqlite3.connect("config.db")
+    cursor = con.cursor()
     words_to_remove = [ASSISTANCE_NAME, 'make', 'a', 'to', 'phone', 'call', 'send', 'message', 'wahtsapp', 'video']
     query = remove_words(query, words_to_remove)
 
@@ -133,15 +130,22 @@ def findContact(query):
         query = query.strip().lower()
         cursor.execute("SELECT number FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
         results = cursor.fetchall()
-        print(results[0][0])
-        mobile_number_str = str(results[0][0])
+        con.commit()
+        if results:
+            con.close()
+            print(results[0][0])
+            mobile_number_str = str(results[0][0])
 
-        if not mobile_number_str.startswith('+91'):
-            mobile_number_str = '+91' + mobile_number_str
+            if not mobile_number_str.startswith('+91'):
+                mobile_number_str = '+91' + mobile_number_str
 
-        return mobile_number_str, query
-    except:
-        speak('not exist in contacts')
+            return mobile_number_str, query
+        else:
+            speak('please mention contact name or add contact in settings')
+            con.close()
+            return 0,0        
+    except Exception as e:
+        print(e)
         return 0, 0
 
 #whatsapp message
@@ -221,6 +225,15 @@ def sendMessage(message, mobileNo, name):
 
 # chat bot 
 def chatBot(query):
+    api_key=get_api_key()
+
+    api_key=str(api_key)
+    genai.configure(api_key=api_key)
+
+
+
+
+    model = genai.GenerativeModel("models/gemini-2.5-flash")
     user_input = query.lower()
 
     
@@ -233,4 +246,4 @@ def chatBot(query):
         speak( response_text)
 
     except Exception as e:
-        speak(" Error accured while generating response. Please try again")
+        speak(e)

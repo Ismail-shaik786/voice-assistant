@@ -217,6 +217,40 @@ $("#tab3 .add-btn2").click(function () {
         $("#app-path").val("");
     });
 });
+//stop siri
+$(document).ready(function () {
+
+    // When any key is pressed
+    $(document).on("keydown", function (e) {
+
+        // Switch SiriWave -> Oval
+        $("#SiriWave").attr("hidden", true);
+        $("#Oval").attr("hidden", false);
+
+        // Stop assistant speaking (your existing stop function)
+        if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+        }
+
+        console.log("Key pressed, assistant stopped.");
+    });
+
+});
+$("#tab4 .add-btn").click(function () {
+    let api = $("#api_key").val().trim();
+    
+
+    if (api === "" ) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    eel.addApi(api)(function (response) {
+        alert(response);
+        $("#api_key").val("");
+        
+    });
+});
 
 
 

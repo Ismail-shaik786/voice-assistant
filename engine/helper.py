@@ -1,4 +1,5 @@
 import re
+import sqlite3
 def extact_yt_term(command):
   pattern=r'play\s+(.*?)\s+on youtube'
   match=re.search(pattern,command,re.IGNORECASE)
@@ -16,3 +17,11 @@ def remove_words(input_string, words_to_remove):
     result_string = ' '.join(filtered_words)
 
     return result_string
+def get_api_key():
+    con = sqlite3.connect("config.db")
+    cursor = con.cursor()
+    cursor.execute("SELECT value FROM Apikey WHERE id = 1")
+    result = cursor.fetchone()
+    con.close()
+    return result[0]
+    
