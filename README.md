@@ -135,12 +135,5 @@ Cybersecurity & AI Developer
 
 ---
 
-If you want, I can also:
 
-- Make it more professional for recruiters  
-- Make it more cybersecurity-focused  
-- Add GitHub badges (Python version, License, Stars, etc.)  
-- Make it more minimal & clean  
-
-Tell me which style you prefer 🚀
 ```
