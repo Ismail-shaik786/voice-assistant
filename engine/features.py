@@ -1,4 +1,4 @@
-from pipes import quote
+import shlex
 import subprocess
 from  playsound import playsound
 import eel
@@ -170,7 +170,7 @@ def whatsApp(mobile_no, message, flag, name):
 
 
     # Encode the message for URL
-    encoded_message = quote(message)
+    encoded_message = shlex.quote(message)
     print(encoded_message)
     # Construct the URL
     whatsapp_url = f"whatsapp://send?phone={mobile_no}&text={encoded_message}"
