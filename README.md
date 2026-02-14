@@ -1,10 +1,5 @@
-Perfect 🔥 since your assistant name is **Jarvis**, here is your upgraded professional `README.md` tailored specifically for your project.
 
-You can copy this and paste it directly into your GitHub repository.
 
----
-
-```markdown
 # 🤖 JARVIS — AI Voice Assistant
 
 JARVIS is a powerful AI-powered voice assistant built using Python that automates daily activities through voice commands. It can call contacts, send messages, open applications, control system operations, and provide intelligent conversational responses using the Google Gemini API.
@@ -43,7 +38,6 @@ JARVIS is a powerful AI-powered voice assistant built using Python that automate
 
 ## 📂 Project Structure
 
-```
 
 voice-assistant/
 │
